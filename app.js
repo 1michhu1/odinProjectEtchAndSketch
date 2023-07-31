@@ -8,9 +8,14 @@ function makeGrid(numRowBoxes, container) {
     }
 }
 
-function changeCellColor(cell, color) {
-    cell.style.backgroundColor = color
+function changeCellColor() {
+    this.style.background = "black" 
+    
 }
 
 const container = document.querySelector("#grid-Container")
 makeGrid(16, container)
+const cells = document.querySelectorAll("#grid-Container > div")
+console.log(cells)
+
+cells.forEach(cell => cell.addEventListener("mouseover", changeCellColor))
