@@ -1,5 +1,6 @@
 function makeGrid(numRowBoxes, pixelWidth) {
     const grid = document.createElement("div")
+    boxSize = pixelWidth/numRowBoxes + "px"
 
     for (let i = 0; i < numRowBoxes; i++) {
         row = document.createElement("div")
@@ -8,8 +9,12 @@ function makeGrid(numRowBoxes, pixelWidth) {
         for (let j = 0; j < numRowBoxes; j++) {
             box = document.createElement("div")
             box.classList.add("square")
+            
+            box.style.height = boxSize
+            box.style.width = boxSize
+            // console.log(boxSize)
             row.appendChild(box)
-            console.log(`j is ${j}`)
+            // box.textContent = "testing"
         }
 
         grid.appendChild(row)
@@ -17,8 +22,7 @@ function makeGrid(numRowBoxes, pixelWidth) {
 
     return grid
 }
-
-const grid = makeGrid(8, 1000)
 const container = document.querySelector("#grid-Container")
-console.log(grid)
+console.log(container.offsetWidth)
+const grid = makeGrid(16, container.offsetWidth)
 container.appendChild(grid)
