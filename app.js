@@ -10,12 +10,38 @@ function makeGrid(numRowBoxes, container) {
 
 function changeCellColor() {
     this.style.background = "black" 
-    
+}
+
+function deleteGrid(container) {
+    while (container.hasChildNodes()) {
+        container.removeChild(container.firstChild)
+    }   
+}
+
+function getValidGridSize() {
+    gridLength = +prompt("Enter a grid length (integer < 100)")
+    while (!(Number.isInteger(gridLength)) || gridLength > 100 || gridLength < 0) {
+        alert("Please enter a valid number")
+        gridLength = +prompt("Enter a grid length (integer < 100)")
+        
+    }
+
+    return gridLength
+}
+
+function generateNewGrid() {
+    deleteGrid(container)
+    gridLength = getValidGridSize()
+    makeGrid(gridLength, container)
+    cells = document.querySelectorAll("#grid-Container > div")
+    cells.forEach(cell => cell.addEventListener("mouseover", changeCellColor))
+
 }
 
 const container = document.querySelector("#grid-Container")
-makeGrid(16, container)
-const cells = document.querySelectorAll("#grid-Container > div")
-console.log(cells)
-
+makeGrid(3, container)
+cells = document.querySelectorAll("#grid-Container > div")
 cells.forEach(cell => cell.addEventListener("mouseover", changeCellColor))
+
+const newGridBtn = document.querySelector("#newGrid") 
+newGridBtn.addEventListener("click", generateNewGrid)
