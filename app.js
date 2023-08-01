@@ -30,11 +30,13 @@ function getValidGridSize() {
 }
 
 function generateNewGrid() {
-    deleteGrid(container)
     gridLength = getValidGridSize()
-    makeGrid(gridLength, container)
-    cells = document.querySelectorAll("#grid-Container > div")
-    cells.forEach(cell => cell.addEventListener("mouseover", changeCellColor))
+    if (gridLength != 0) {
+        deleteGrid(container)
+        makeGrid(gridLength, container)
+        cells = document.querySelectorAll("#grid-Container > div")
+        cells.forEach(cell => cell.addEventListener("mouseover", changeCellColor))
+    }
 
 }
 
