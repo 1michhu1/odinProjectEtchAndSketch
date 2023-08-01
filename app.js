@@ -1,3 +1,5 @@
+let isMouseDown = false
+
 function makeGrid(numRowBoxes, container) {
     container.style.gridTemplateColumns = `repeat(${numRowBoxes}, 1fr)`
     container.style.gridTemplateRows = `repeat(${numRowBoxes}, 1fr)`
@@ -9,7 +11,9 @@ function makeGrid(numRowBoxes, container) {
 }
 
 function changeCellColor() {
-    this.style.background = "black" 
+    if (isMouseDown) {
+        this.style.background = "black" 
+    }
 }
 
 function deleteGrid(container) {
@@ -35,15 +39,27 @@ function generateNewGrid() {
         deleteGrid(container)
         makeGrid(gridLength, container)
         cells = document.querySelectorAll("#grid-Container > div")
-        cells.forEach(cell => cell.addEventListener("mouseover", changeCellColor))
+        cells.forEach(cell => cell.addEventListener("mousedown", () => isMouseDown = true))
+        cells.forEach(cell => cell.addEventListener("mouseup", () => isMouseDown = false))
+
     }
 
+}
+
+function addListenersToCells(cells) {
+    for (const cell in cells) {
+        cell.addEventListener("mouseover", changeCellColor)
+    }
 }
 
 const container = document.querySelector("#grid-Container")
 makeGrid(3, container)
 cells = document.querySelectorAll("#grid-Container > div")
+cells.forEach(cell => cell.addEventListener("mousedown", () => isMouseDown = true))
 cells.forEach(cell => cell.addEventListener("mouseover", changeCellColor))
+
+cells.forEach(cell => cell.addEventListener("mouseup", () => isMouseDown = false))
+
 
 const newGridBtn = document.querySelector("#newGrid") 
 newGridBtn.addEventListener("click", generateNewGrid)
