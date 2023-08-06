@@ -40,6 +40,7 @@ function generateNewGrid() {
         makeGrid(gridLength, container)
         cells = document.querySelectorAll("#grid-Container > div")
         cells.forEach(cell => cell.addEventListener("mousedown", () => isMouseDown = true))
+        cells.forEach(cell => cell.addEventListener("mouseover", changeCellColor))
         cells.forEach(cell => cell.addEventListener("mouseup", () => isMouseDown = false))
 
     }
@@ -57,7 +58,6 @@ makeGrid(3, container)
 cells = document.querySelectorAll("#grid-Container > div")
 cells.forEach(cell => cell.addEventListener("mousedown", () => isMouseDown = true))
 cells.forEach(cell => cell.addEventListener("mouseover", changeCellColor))
-
 cells.forEach(cell => cell.addEventListener("mouseup", () => isMouseDown = false))
 
 
