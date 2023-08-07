@@ -1,5 +1,6 @@
 let isMouseDown = false
 let isMouseEnter = false
+let isErase = false
 
 function makeGrid(numRowBoxes, container) {
     container.style.gridTemplateColumns = `repeat(${numRowBoxes}, 1fr)`
@@ -11,11 +12,14 @@ function makeGrid(numRowBoxes, container) {
     }
 }
 
-function changeCellColor() {
-    console.log("mouseENTER, isMouseDown is ", isMouseDown)
+function changeCellColor(e) {
     if (isMouseDown) {
-        this.style.background = "black" 
-        console.log("colour change ran")
+        if (isErase) {
+            e.target.style.background = "white" 
+        } else {
+            e.target.style.background = "black" 
+
+        }
     }
 }
 
@@ -36,15 +40,15 @@ function getValidGridSize() {
     return gridLength
 }
 
-
 function setCellListeners(cells) {
     cells.forEach(cell => cell.addEventListener("dragstart",(event)=> event.preventDefault() ))
     cells.forEach(cell => cell.addEventListener("drop",(event) => event.preventDefault() ))
 
-    cells.forEach(cell => cell.addEventListener("mouseup", () => {isMouseDown = false; console.log("mouseUP ran, isMousedown: ", isMouseDown) }))
-    cells.forEach(cell => cell.addEventListener("mousedown", () => {isMouseDown = true; console.log("mouseDOWN ran, isMousedown: ", isMouseDown) }))
+    cells.forEach(cell => cell.addEventListener("mousedown", (e) => {isMouseDown = true; changeCellColor(e)}))
     cells.forEach(cell => cell.addEventListener("mouseenter", changeCellColor))
-    
+    cells.forEach(cell => cell.addEventListener("mouseup", () => {isMouseDown = false}))
+
+
 }
 
 function generateNewGrid() {
@@ -72,3 +76,9 @@ setCellListeners(cells)
 
 const newGridBtn = document.querySelector("#newGrid") 
 newGridBtn.addEventListener("click", generateNewGrid)
+
+const eraseBtn = document.querySelector("#erase")
+eraseBtn.addEventListener("click", () => isErase = true)
+
+const drawBtn = document.querySelector("#draw")
+drawBtn.addEventListener("click", () => isErase = false)
